@@ -9,9 +9,11 @@ var requestMiddleware = require('../middlewares/request.middleware')
 var healthService = require('../service/healthCheckService')
 
 var BASE_URL_V1_channel = '/v1/channel'
-var dependentServiceHealth = ['EKSTEP']
+
+var dependentServiceHealth = ['LEARNER']
 
 module.exports = function (app) {
+  
   app.route(BASE_URL_V1_channel + '/read/:channelId')
     .get(healthService.checkDependantServiceHealth(dependentServiceHealth),
       requestMiddleware.createAndValidateRequestBody, channelService.getChannelValuesById)
