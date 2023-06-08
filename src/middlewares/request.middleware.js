@@ -40,6 +40,7 @@ var apiInterceptor = new ApiInterceptor(keyCloakConfig, cacheConfig)
  * @returns {unresolved}
  */
 function createAndValidateRequestBody (req, res, next) {
+    console.log(req,body,'line 23')
   logger.debug({ msg: 'createAndValidateRequestBody() called' }, req)
   req.body.ts = new Date()
   req.body.url = req.url
