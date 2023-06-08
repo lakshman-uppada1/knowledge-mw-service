@@ -45,6 +45,10 @@ const pluginRepoBaseUrl = process.env.sunbird_plugin_repo_api_base_url || 'https
 const dataServiceBaseUrl = process.env.sunbird_data_service_api_base_url || 'https://qa.ekstep.in/api'
 const languageServiceBaseUrl = process.env.sunbird_language_service_api_base_url || 'https://qa.ekstep.in/api/language'
 
+// 
+  console.log(learnerServiceLocalBaseUrl,'line 49 app.js')
+// 
+
 const searchServiceApiKey = process.env.sunbird_search_service_api_key
 const dialRepoApiKey = process.env.sunbird_dial_repo_api_key
 const pluginRepoApiKey = process.env.sunbird_plugin_repo_api_key
@@ -59,6 +63,7 @@ const isHealthCheckEnabled = process.env.sunbird_health_check_enable || 'true'
 const contentServiceLocalBaseUrl = process.env.sunbird_content_service_local_base_url ? process.env.sunbird_content_service_local_base_url : 'http://knowledge-mw-service:5000'
 const sunbirdGzipEnable = process.env.sunbird_gzip_enable || 'true'
 const kidTokenPublicKeyBasePath = process.env.sunbird_kid_public_key_base_path || '/keys/'
+const userTokenValidateEnable = process.env.enable_user_token_validation || 'true'
 
 configUtil.setContentProviderApi(contentProviderApiConfig.API)
 configUtil.setConfig('CONTENT_SERVICE_BASE_URL', contentServiceBaseUrl)
@@ -88,8 +93,10 @@ configUtil.setConfig('CASSANDRA_DB_HEALTH_STATUS', 'true')
 configUtil.setConfig('EKSTEP_HEALTH_STATUS', 'true')
 configUtil.setConfig('CONTENT_SERVICE_LOCAL_BASE_URL', contentServiceLocalBaseUrl)
 configUtil.setConfig('ENABLE_GZIP', sunbirdGzipEnable)
+configUtil.setConfig('ENABLE_USER_TOKEN_VALIDATION', userTokenValidateEnable)
 
 process.env.sunbird_cassandra_urls = process.env.sunbird_cassandra_urls || '127.0.0.1'
+console.log(process.env.sunbird_cassandra_urls,'95 app.js')
 process.env.dial_code_image_temp_folder = 'temp'
 
 logger.init({
@@ -181,7 +188,7 @@ require('./routes/questionRoutes')(app)
 // this middleware route add after all the routes
 require('./middlewares/proxy.middleware')(app)
 
-async function startServer (cb) {
+async function startServer(cb) {
   var keyCloakConfig = {
     'authServerUrl': process.env.sunbird_keycloak_auth_server_url ? process.env.sunbird_keycloak_auth_server_url : 'https://staging.open-sunbird.org/auth',
     'realm': process.env.sunbird_keycloak_realm ? process.env.sunbird_keycloak_realm : 'sunbird',
