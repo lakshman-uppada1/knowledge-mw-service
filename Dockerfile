@@ -10,7 +10,7 @@ MAINTAINER "Manojvv" "manojv@ilimi.in"
 RUN sed -i '/jessie/d' /etc/apt/sources.list
 RUN apt-get -o Acquire::Check-Valid-Until=false update
 
-RUN apt update && apt install openssl imagemagick -y \
+RUN apt update && apt install openssl -y \
     && apt-get clean \
     && useradd -m sunbird
 USER sunbird
