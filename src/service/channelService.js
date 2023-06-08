@@ -22,11 +22,12 @@ var responseCode = messageUtils.RESPONSE_CODE
  */
 
 function getChannelValuesById (req, response) {
-  logger.debug({ msg: 'channelService.getChannelValuesById() called' }, req)
+  logger.error({ msg: 'channelService.getChannelValuesById() called' }, req)
   var data = {}
   var rspObj = req.rspObj
   data.body = req.body
   data.channelId = req.params.channelId
+  logger.error({ msg: 'channelService.getChannelValuesById() data' }, data)
   if (rspObj.telemetryData) {
     rspObj.telemetryData.object = utilsService.getObjectData(data.channelId, 'channel', '', {})
   }
@@ -44,7 +45,7 @@ function getChannelValuesById (req, response) {
   async.waterfall([
 
     function (CBW) {
-      logger.debug({ msg: 'Request to get channel details by id ', additionalInfo: { channelId: _.get(data, 'channelId') } }, req)
+      logger.error({ msg: 'Request to get channel details by id ', additionalInfo: { channelId: _.get(data, 'channelId') } }, req)
       ekStepUtil.getChannelValuesById(data.channelId, req.headers, function (err, res) {
         if (err || res.responseCode !== responseCode.SUCCESS) {
           rspObj.responseCode = res && res.responseCode ? res.responseCode : responseCode.SERVER_ERROR
@@ -61,7 +62,7 @@ function getChannelValuesById (req, response) {
 
     function (res) {
       rspObj.result = res.result
-      logger.debug({ msg: 'channel details', additionalInfo: { result: rspObj.result } }, req)
+      logger.error({ msg: 'channel details', additionalInfo: { result: rspObj.result } }, req)
       return response.status(200).send(respUtil.successResponse(rspObj))
     }
   ])
