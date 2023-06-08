@@ -81,8 +81,11 @@ function createAndValidateRequestBody (req, res, next) {
   }
 
   logger.debug({ msg: 'new request', requestData: requestedData }, req)
+  console.log(requestedData)
 
   req.rspObj = rspObj
+    console.log(req.rspObj)
+
   next()
 }
 
