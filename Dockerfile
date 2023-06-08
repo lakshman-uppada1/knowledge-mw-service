@@ -8,6 +8,7 @@ RUN npm install --unsafe-perm
 FROM node:8.11-slim
 MAINTAINER "Manojvv" "manojv@ilimi.in"
 RUN sed -i '/jessie-updates/d' /etc/apt/sources.list \
+    && apt-get -o Acquire::Check-Valid-Until=false update \
     && apt update && apt install openssl imagemagick -y \
     && apt-get clean \
     && useradd -m sunbird
